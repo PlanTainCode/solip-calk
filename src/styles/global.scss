@@ -1,0 +1,22 @@
+body {
+    background: #EBEBEB;
+    padding: 0px;
+    margin: 0px;
+}
+.page {
+    max-width: 1170px;
+    margin: 60px auto 0px auto;
+    @media (max-width: 1240px) {
+        max-width: 1060px;
+        padding: 0px 30px;
+    }
+    @media (max-width: 1024px) {
+        
+    }
+    @media (max-width: 810px) {
+        padding: 0px 15px;
+    }
+    @media (max-width: 540px) {
+        padding: 0px 10px;
+    }
+}
