@@ -2,7 +2,7 @@ import React from 'react'
 import './request.scss'
 
 
-function Request() {
+function Request({total}) {
   return (
     <div className="request">
       <div className="request__title">
@@ -13,7 +13,7 @@ function Request() {
       <span></span>
 
       <div className="request__coast">
-        Итогоговая стоимость: <>0 kr</>
+        Итогоговая стоимость: <>{!isNaN(total) ? total : '0'} kr</>
       </div>
 
       <button>Оставить заявку</button>

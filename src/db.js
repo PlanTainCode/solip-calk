@@ -1,6 +1,8 @@
 import P1 from './assets/p1.jpg'
 import P2 from './assets/p2.jpg'
 import P3 from './assets/p3.jpg'
+import axios from 'axios'
+import React from 'react'
 
 export const items = [
     { 

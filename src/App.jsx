@@ -11,14 +11,42 @@ import { useDispatch, useSelector } from 'react-redux'
 import CustomTab from './pages/tab'
 import {v4} from 'uuid'
 import { setContent, removeContent } from './features/content/contentSlice'
+import axios from 'axios'
+import { getBass, getLiving } from './features/items/itemsSlice'
 
 function App({items}) {
+
+
+  // const items = useSelector((state) => state.items.items)
+
+
+  // React.useEffect(() => {
+
+  //   const tabUid = items.map((it) => it.uid)
+
+  //   if (tabUid.find((t) => t === 'living')) {
+  //     console.log('.')
+  //   } else {
+  //     dispatch(getLiving())
+  //   }
+
+  //   if (tabUid.find((t) => t === 'bass')) {
+  //     console.log('.')
+  //   } else {
+  //     dispatch(getBass())
+  //   }
+
+  // })
+
+  // console.log('items', items)
 
   const popup = useSelector((state) => state.popupData.popup)
 
   const content = useSelector((state) => state.contentData.content)
 
   const hwl = useSelector((state) => state.hwlData.hwl)
+
+  const total = useSelector((state) => state.totalData.total)
 
   const [popupActive, setPopupActive] = React.useState(false)
 
@@ -57,6 +85,7 @@ function App({items}) {
     dispatch(removeContent(uid))
   }
 
+  
 
   // console.log(popup)
   // console.log(hwl)
@@ -115,7 +144,7 @@ function App({items}) {
             )}
         </div>
       </Tabs>
-      <Request />
+      <Request total={total} />
       <Footer />
     </div>
   )

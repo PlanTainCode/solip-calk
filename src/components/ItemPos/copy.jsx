@@ -9,8 +9,8 @@ export const ItemPos = ({poss, uid, title, coast}) => {
 
     const dispatch = useDispatch()
 
-    const cast = poss.map((ps) => ps.coast)
-    const times = poss.map((ps) => ps.value)
+    // const cast = poss.map((ps) => ps.coast)
+    // const times = poss.map((ps) => ps.value)
 
     
 
@@ -68,8 +68,6 @@ export const ItemPos = ({poss, uid, title, coast}) => {
             setActiveItem(null)
         }
     }
-
-    // console.log(activeName)
 
     return (
         <div className='item-pos'>
