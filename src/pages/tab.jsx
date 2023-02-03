@@ -1,18 +1,15 @@
 import React from 'react'
 import '../styles/room.scss'
 import { useDispatch, useSelector } from 'react-redux'
-// import {setHigh, setLength, setWidth} from '../features/params/paramSlice'
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs'
-import { ItemPos } from '../components/ItemPos/copy'
-import { v4 } from 'uuid'
+// import { ItemPos } from '../components/ItemPos/copy'
+import { ItemPos } from '../components/ItemPos'
 import { setHwl, removeHwl } from '../features/hwl/hwlSlice'
-import { resetTotal, setTotal } from '../features/total/totalSlice'
+import { ItemPosT1 } from '../components/ItemPosT1'
 
 function CustomTab({ uid, params, tabs, services}) {
 
   const dispatch = useDispatch()
-
-  // console.log(tabTitle.map((t) => t !== 'Гостинная'))
 
   const [high, setHigh] = React.useState()
   const [width, setWidth] = React.useState()
@@ -30,43 +27,9 @@ function CustomTab({ uid, params, tabs, services}) {
     dispatch(setHwl(hwl))
   }
 
-  const S = Number(params?.width) * Number(params?.length);
-  const P = 2 * (Number(params?.length) + Number(params?.width));
-  const Ps = Number(P)/4;
-  const Sh = Number(params?.high) * Number(Ps);
-
   const pos = useSelector((state) => state.posData.pos)
 
-  const cast = pos.map((ps) => ps.coast)
-  const times = pos.map((ps) => ps.value)
-
-  const newCast = cast.map((cs) => {
-    const result = cs === 'Договорная' ? 0 : cs;
-    return result
-  })
-
-  // console.log(newCast, times)
-
-
-  function sumProducts(newCast, times, S) {
-    if(newCast.length) 
-        return  newCast.pop() * times.pop() * S + sumProducts(newCast, times, S);
-
-    return 0;
-  }
-
-  React.useState(() => {
-    dispatch(resetTotal())
-    dispatch(setTotal(sumProducts(newCast, times, Sh)))
-  })
-
-
-  // console.log(params)
-
-  // console.log(pos)
-
-  // console.log(tabs)
-  // console.log(services)
+ 
   return (
     <div className='room'>
       <Tabs selectedTabClassName='tabs__li active'>
@@ -101,21 +64,17 @@ function CustomTab({ uid, params, tabs, services}) {
             {services.list.map((item) => 
               <TabPanel className="room__body--block">
                 {item.map((subitem) => 
-                  
-                    <ItemPos poss={pos} uid={subitem.uid} title={subitem.title} coast={subitem.coast} />
+                    subitem.type === "sht" 
+                    ? 
+                      <ItemPosT1 params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} />
+                    :
+                      <ItemPos params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} />
+                    
+                    
                   
                 )}
               </TabPanel>
             )}
-          {/* <ul>
-            <li>Высота стен: {params?.high}</li>
-            <li>Ширина: {params?.width}</li>
-            <li>Длина: {params?.length}</li>
-            <li>Площадь комнаты: {S}</li>
-            <li>Периметр комнаты: {P}</li>
-            <li>Средняя стена: {Ps}</li>
-            <li>Площадь средней стены: {Sh}</li>
-          </ul> */}
         </section>
       </Tabs>
     </div>

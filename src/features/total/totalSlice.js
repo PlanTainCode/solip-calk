@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    total: null,
+    total: 0,
 }
 
 export const paramSlice = createSlice({
@@ -12,7 +12,7 @@ export const paramSlice = createSlice({
             state.total = action.payload
         },
         resetTotal: (state, action) => {
-            state.total = null
+            state.total = 0
         }
     }
 })

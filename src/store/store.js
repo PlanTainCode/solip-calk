@@ -7,6 +7,7 @@ import posSlice from '../features/pos/posSlice'
 import contentSlice from '../features/content/contentSlice'
 import totalSlice from '../features/total/totalSlice'
 import itemsSlice from '../features/items/itemsSlice'
+import mussumSlice from '../features/mussum/mussumSlice'
 
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     posData: posSlice,
     contentData: contentSlice,
     totalData: totalSlice,
+    mussumData: mussumSlice,
 })
 
 const persistConfig = {

@@ -13,9 +13,12 @@ export const posSlice = createSlice({
         },
         removePos: (state, action) => {
             state.pos = state.pos.filter((po) => po.uid !== action.payload)
-        }
+        },
+        removeAllPos: (state, action) => {
+            state.pos = state.pos.filter((po) => po.rodUid !== action.payload)
+        },
     }
 })
 
-export const {setPos, removePos} = posSlice.actions
+export const {setPos, removePos, removeAllPos} = posSlice.actions
 export default posSlice.reducer

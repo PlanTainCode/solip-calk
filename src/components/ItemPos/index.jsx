@@ -2,21 +2,23 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { removePos, setPos } from "../../features/pos/posSlice";
 
-export const ItemPos = ({pos, uid, title, coast}) => {
-
-    // Открытие/закрытие модульного окна
-    const [itemActive, setItemActive] = React.useState(false)
-
-    // Активный элемент
+export const ItemPos = ({params, rodUid, poss, uid, title, coast, type}) => {
+    const [modalActive, setModalActive] = React.useState(false)
+    
     const [activeItem, setActiveItem] = React.useState(null)
 
-    // Значение активного элемента (по факту нахуй не сдалось)
-    const [value, setValue] = React.useState(null)
+    const dispatch = useDispatch()
 
-    // Активный элемент сравненный с pos'ом
-    const [plus, setPlus] = React.useState(null)
 
-    // Список выборов
+    React.useEffect(() => {
+        const newItem = poss.find((ps) => ps.uid === uid)
+        if (newItem) {
+            setActiveItem(newItem.value)
+        }
+    })
+
+    
+    // Данные
     const items = [
         {
             value: 1,
@@ -34,72 +36,80 @@ export const ItemPos = ({pos, uid, title, coast}) => {
             value: 4,
             title: "4 стены"
         },
+        {
+            value: null,
+            title: "Отмена"
+        },
     ]
 
-    // Массив с активными обьектами (с одним активным обьектом)
-    const activeName = items[activeItem]
+    const activeName = items[activeItem - 1]
 
-    // Диспатч
-    const dispatch = useDispatch()
+    const addPos = (value) => {
 
-    // Добавление элемента в массив pos + организация работы клиента
-    const addPos = (value, index) => {
-
-        setActiveItem(index);
-        setItemActive(false)
+        setModalActive(false)
 
         const pos = {
-
+            rodUid: rodUid,
             uid: uid,
             coast: coast,
             value: value,
+            type: type,
+            high: params?.high,
+            width: params?.width,
+            length: params?.length,
         }
 
-        dispatch(removePos(pos.uid))
+        dispatch(removePos(uid))
         dispatch(setPos(pos))
         
+        if (value === null) {
+            dispatch(removePos(uid))
+            setActiveItem(null)
+        }
     }
 
-
-    // Проверка на нахождение в pos'е
-    React.useEffect(() => {
-        const newItem = pos.find((ps) => ps.uid === uid)
-
-        if (newItem !== null) {
-            setPlus(newItem)
+    const viewCoast = (type) => {
+        if (type === '1sh') {
+            return "kr/m2"
         }
 
-        
-    })
+        if (type === 'S') {
+            return "kr/m2"
+        }
 
-    // console.log(plus)
+        if (type === 'sht') {
+            return "шт"
+        }
+    }
 
     return (
         <div className='item-pos'>
             {/* Наименование услуги (тут все четко) */}
             <p className="item-pos__b">{title}</p>
             {/* Цена услуги (тоже все четко) */}
-            <p><div className="item-pos__coast">Цена:</div>{coast} {coast === 'Договорная' ? undefined : "kr/m2"}</p>
+            <p><div className="item-pos__coast">Цена:</div>{coast} {coast === 'Договорная' ? undefined : viewCoast(type)}</p>
             {/* Элемент выбора */}
             <div className="item-pos__choice">
                 {/* Кнопка + выбранный элемент */}
                 <span 
                     className={activeItem !== null ? "item-pos__choice--title active" : "item-pos__choice--title"} 
-                    onClick={() => setItemActive(!itemActive)}
+                    onClick={() => setModalActive(!modalActive)}
                 >
                     {activeItem === null ? 'Добавить' : activeName.title}
+                    {/* Добавить */}
                 </span>
                 {/* Список элементов выбора */}
-                <ul className={itemActive ? "item-pos__choice--sub active" : "item-pos__choice--sub"}>
-                    {items.map((item, index) => (
+                <ul 
+                    className={modalActive ? "item-pos__choice--sub active" : "item-pos__choice--sub"}
+                >
+                    {items.map((item) => (
                         <li 
-                            key={`${item.value}_${index}`} 
+                            key={`${item.value}__${uid}`} 
                             value={item.value}
-                            onClick={() => addPos(item.value, index)}
+                            onClick={() => addPos(item.value)}
                             className={activeItem !== null && activeName.title === item.title ? "active" : ""}
                         >{item.title}</li>
                     ))}
-                    <li value={null} onClick={(e) => addPos(e.target.value, null)}>Отмена</li>
                 </ul>
                 {/* Конец залупы */}
             </div>

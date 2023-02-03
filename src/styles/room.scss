@@ -457,6 +457,61 @@
     &__choice {
         width: 110px;
         
+        &--sht {
+            display: flex;
+            justify-content: space-between;
+            max-height: 30px;
+            align-items: center;
+            button {
+                width: 35px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Gilroy';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 18px;
+                color: #000000;
+                cursor: pointer;
+                transition: all 0.2s ease 0s;
+                border: 2px solid #000000;
+                &.disabled {
+                    border: 2px solid #969696;
+                    color: #969696;
+                    cursor: default;
+                }
+                &:first-child {
+                    border-radius: 10px  0px  0px 10px;
+                }
+
+                &:last-child {
+                    border-radius:  0px 10px 10px 0px ;
+                }
+
+                &:hover {
+                    background: #000000;
+                    color: #FFFFFF;
+                    &.disabled {
+                        background: inherit;
+                        color: #969696;
+                    }
+                }
+            
+            }
+
+            p {
+                font-family: 'Gilroy';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 18px;
+                color: #000000;
+            }
+        }
+        
+
+
         &--title {
             display: flex;;
             box-sizing: border-box;
@@ -566,7 +621,23 @@
         }
         &__choice {
             width: 90px;
-            
+            &--sht {
+                display: flex;
+                justify-content: space-between;
+                max-height: 30px;
+                align-items: center;
+                button {
+                    width: 25px;
+                    font-size: 16px;
+                    line-height: 16px;
+                    border: 2px solid #000000;
+                }
+    
+                p {
+                    font-size: 16px;
+                    line-height: 16px;
+                }
+            }
             &--title {
                 width: 90px;
                 height: 28px;

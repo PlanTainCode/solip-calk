@@ -11,32 +11,36 @@ import { useDispatch, useSelector } from 'react-redux'
 import CustomTab from './pages/tab'
 import {v4} from 'uuid'
 import { setContent, removeContent } from './features/content/contentSlice'
-import axios from 'axios'
 import { getBass, getLiving } from './features/items/itemsSlice'
+import { isInteger, isNumber } from 'lodash'
+import { removeMussum, setMussum } from './features/mussum/mussumSlice'
+import { isEqual } from 'underscore'
+import { removeAllPos, removePos } from './features/pos/posSlice'
+import { resetTotal, setTotal } from './features/total/totalSlice'
 
-function App({items}) {
+function App() {
 
 
-  // const items = useSelector((state) => state.items.items)
+  const items = useSelector((state) => state.items.items)
 
 
-  // React.useEffect(() => {
+  React.useEffect(() => {
 
-  //   const tabUid = items.map((it) => it.uid)
+    const tabUid = items.map((it) => it.uid)
 
-  //   if (tabUid.find((t) => t === 'living')) {
-  //     console.log('.')
-  //   } else {
-  //     dispatch(getLiving())
-  //   }
+    if (tabUid.find((t) => t === 'living')) {
+      console.log('')
+    } else {
+      dispatch(getLiving())
+    }
 
-  //   if (tabUid.find((t) => t === 'bass')) {
-  //     console.log('.')
-  //   } else {
-  //     dispatch(getBass())
-  //   }
+    if (tabUid.find((t) => t === 'bass')) {
+      console.log('')
+    } else {
+      dispatch(getBass())
+    }
 
-  // })
+  })
 
   // console.log('items', items)
 
@@ -48,11 +52,67 @@ function App({items}) {
 
   const total = useSelector((state) => state.totalData.total)
 
+  const pos = useSelector((state) => state.posData.pos)
+
+  const mussum = useSelector((state) => state.mussumData.mussum)
+
   const [popupActive, setPopupActive] = React.useState(false)
 
   const dispatch = useDispatch()
 
 
+  // Общий счетчик 
+    const [posLenght, setPosLenght] = React.useState([])
+
+    React.useEffect(() => {
+
+      if (isEqual(pos, posLenght) === true) {
+        console.log('Внатуре');
+      } else {
+        console.log('Внатуре говно');
+        setPosLenght(pos);
+      }
+
+    })
+
+
+    const pars = (length, width, high, type) => {
+      if (type === 'S') {
+        return (Number(width) * Number(length))
+      }
+
+      if (type === '1sh') {
+        return (((Number(width) + Number(length)) / 4) * Number(high))
+      }
+      if (type === 'sht') {
+        return 1
+      }
+    }
+
+    const item = (coast, value, length, width, high, type) => {
+      if (coast === "Договорная") {
+        dispatch(setMussum(0))
+      } else {
+        dispatch(setMussum((Number(coast) * Number(value) * pars(length, width, high, type))))
+      }
+    }
+    
+    const mars = () => {
+      dispatch(removeMussum());
+      posLenght?.map((pps) => item(pps.coast, pps.value, pps.length, pps.width, pps.high, pps.type));
+
+      dispatch(resetTotal())
+
+      if (mussum.length !== 0) {
+        dispatch(setTotal(mussum.reduce((a, b) => a + b)))
+      }
+      
+    }
+
+    console.log(mussum)
+    console.log(pos)
+    console.log(posLenght)
+  // 
   const addPopupHandler = (item) => {
     const pop = {
       uid: v4(),
@@ -63,6 +123,7 @@ function App({items}) {
       list: item.content.services.map((pt) => pt.map((t) => 
       {
         const newItem = {
+          type: t.type,
           title: t.title,
           coast: t.coast,
           uid: v4()
@@ -83,15 +144,14 @@ function App({items}) {
   const removePopupHandler = (uid) => {
     dispatch(removeData(uid))
     dispatch(removeContent(uid))
+    dispatch(removeAllPos(uid))
+    dispatch(removeMussum())
   }
 
-  
+  const url = 'http://localhost:1337'
 
-  // console.log(popup)
-  // console.log(hwl)
-  // console.log(content)
   return (
-    <div className='page'>
+    <div className='page' onClick={() => mars()}>
       <div className={popupActive ? 'popup active' : 'popup'}>
         <div className={popupActive ? 'popup__area active' : 'popup__area'}></div>
         
@@ -106,7 +166,7 @@ function App({items}) {
           <div className="popup__content--choice">
             {items.map((item) => (
               <div className="popup-item" onClick={(e) => addPopupHandler(item)}>
-                <img src={item.tab.image} alt="p1" />
+                <img src={`${url}` + item.tab.image.data.attributes.url} alt="p1" />
                 <span></span>
                 <h3>{item.tab.title}</h3>
               </div>
@@ -120,8 +180,8 @@ function App({items}) {
       <Tabs selectedTabClassName="active">
         <TabList className="nav">
           {popup.map((pop) => (
-            <Tab className="nav__item" >
-              <img src={pop.item.tab.image} alt="p1" />
+            <Tab className="nav__item"  >
+              <img src={`${url}` + pop.item.tab.image.data.attributes.url} alt="p1" />
               <span></span>
               <h3>{pop.item.tab.title}</h3>
               <div className="del" onClick={() => removePopupHandler(pop.uid)}>
