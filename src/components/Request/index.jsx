@@ -1,8 +1,12 @@
 import React from 'react'
+import { Form } from '../Form'
 import './request.scss'
 
 
 function Request({total}) {
+  const [st, setSt] = React.useState()
+
+
   return (
     <div className="request">
       <div className="request__title">
@@ -16,7 +20,11 @@ function Request({total}) {
         Итогоговая стоимость: <>{!isNaN(total) ? total : '0'} kr</>
       </div>
 
-      <button>Оставить заявку</button>
+      <button onClick={() => setSt(!st)}>Оставить заявку</button>
+
+      {st ? <p>хуй</p> : <p>пизда</p>}
+
+      <Form />
     </div>
   )
 }

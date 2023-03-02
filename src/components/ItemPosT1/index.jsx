@@ -9,14 +9,7 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type}) => {
     const [count, setCount] = React.useState(0)
 
 
-    const newCount = count;
-    // React.useEffect(() => {
-        
-    //     const newItem = poss.find((ps) => ps.uid === uid)
-    //     if (newItem) {
-    //         setCount(newItem.value)
-    //     }
-    // })
+   
 
     const viewCoast = (type) => {
         if (type === '1sh') {
@@ -55,7 +48,7 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type}) => {
             rodUid: rodUid,
             uid: uid,
             coast: coast,
-            value: newCount,
+            value: count,
             type: type,
             high: params?.high,
             width: params?.width,
@@ -90,7 +83,7 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type}) => {
                         className={count === 0 ? "disabled" : ""}
                         onMouseOut={() => addPos()}
                     >-</button>
-                    <p>{newCount}</p>
+                    <p>{count}</p>
                     <button 
                         onClick={() => Con(0)} 
                         onMouseOut={() => addPos()}
