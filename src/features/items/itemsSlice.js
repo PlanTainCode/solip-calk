@@ -7,41 +7,29 @@ const initialState = {
     items: [],
 }
 
-export const getLiving = createAsyncThunk(
-    'items/getLiving',
+export const getEl = createAsyncThunk(
+    'items/getEl',
     async (_, {rejectWithValue, dispatch}) => {
-        const res = await axios.get('http://localhost:1337/api/living?populate=deep,10').then(({data}) => data.data)
+        const res = await axios.get('https://solipadmin.tech/api/calks?populate=deep,10').then(({data}) => data.data)
 
-        const newRes = {
-            uid: res?.attributes.uid,
-            tab: res?.attributes.Tab,
-            content: {
-            tabs: res?.attributes.Tabs.Element,
-            services: res?.attributes.Services.Elementos.map((el) => el.Element),
+        const newRes = res.map((r) => {
+            const newItems = {
+                uid: r?.attributes.uid,
+                title: r?.attributes.title,
+                image: r?.attributes.image.data.attributes,
+                tab: r?.attributes.Tabs,
+                services: r?.attributes.Services,
             }
-        }
+            return newItems
+        })
+        
+
         dispatch(removeItems(newRes.uid))
         dispatch(setItems(newRes))
+        
     }
 )
 
-export const getBass = createAsyncThunk(
-    'items/getBass',
-    async (_, {rejectWithValue, dispatch}) => {
-        const res = await axios.get('http://localhost:1337/api/basroom?populate=deep,10').then(({data}) => data.data)
-
-        const newRes = {
-            uid: res?.attributes.uid,
-            tab: res?.attributes.Tab,
-            content: {
-            tabs: res?.attributes.Tabs.Element,
-            services: res?.attributes.Services.Elementos.map((el) => el.Element),
-            }
-        }
-        dispatch(removeItems(newRes.uid))
-        dispatch(setItems(newRes))
-    }
-)
 
 export const itemsSlice = createSlice({
     name: 'items',
@@ -54,14 +42,11 @@ export const itemsSlice = createSlice({
             state.items = state.items.filter((pop) => pop.uid !== action.payload)
         },
     },
-    extraReducers: {
-        [getLiving.fulfilled]: () => console.log('fulfilled'),
-        [getLiving.pending]: () => console.log('pending'),
-        [getLiving.rejected]: () => console.log('rejected'),
-        [getBass.fulfilled]: () => console.log('fulfilled'),
-        [getBass.pending]: () => console.log('pending'),
-        [getBass.rejected]: () => console.log('rejected'),
-    }
+    // extraReducers: {
+    //     [getEl.fulfilled]: () => console.log('fulfilled'),
+    //     [getEl.pending]: () => console.log('pending'),
+    //     [getEl.rejected]: () => console.log('rejected'),
+    // }
 })
 
 export const { setItems, removeItems } = itemsSlice.actions;

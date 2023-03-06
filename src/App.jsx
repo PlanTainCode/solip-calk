@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import CustomTab from './pages/tab'
 import {v4} from 'uuid'
 import { setContent, removeContent } from './features/content/contentSlice'
-import { getBass, getLiving } from './features/items/itemsSlice'
+import { getEl } from './features/items/itemsSlice'
 import { isInteger, isNumber } from 'lodash'
 import { removeMussum, setMussum } from './features/mussum/mussumSlice'
 import { isEqual } from 'underscore'
@@ -21,31 +21,25 @@ import { resetTotal, setTotal } from './features/total/totalSlice'
 function App() {
 
 
-  const items = useSelector((state) => state.items.items)
-
-
+  const items = useSelector((state) => state.items.items[0])
+  // console.log(items)
+  
   React.useEffect(() => {
 
-    const tabUid = items.map((it) => it.uid)
+    const tabUid = items?.map((it) => it.uid)
 
-    if (tabUid.find((t) => t === 'living')) {
+    if (tabUid?.find((t) => t)) {
       console.log('')
     } else {
-      dispatch(getLiving())
+      dispatch(getEl())
     }
 
-    if (tabUid.find((t) => t === 'bass')) {
-      console.log('')
-    } else {
-      dispatch(getBass())
-    }
 
   })
 
-  // console.log('items', items)
 
   const popup = useSelector((state) => state.popupData.popup)
-
+  console.log(popup)
   const content = useSelector((state) => state.contentData.content)
 
   const hwl = useSelector((state) => state.hwlData.hwl)
@@ -120,7 +114,7 @@ function App() {
     }
 
     const content = {
-      list: item.content.services.map((pt) => pt.map((t) => 
+      list: item.services.map((pt) => pt.Element.map((t) => 
       {
         const newItem = {
           type: t.type,
@@ -148,7 +142,7 @@ function App() {
     dispatch(removeMussum())
   }
 
-  const url = 'http://localhost:1337'
+  const url = 'https://solipadmin.tech'
 
   return (
     <div className='page' onClick={() => mars()}>
@@ -164,11 +158,13 @@ function App() {
           </div>
           <h1>выберите тип комнаты</h1>
           <div className="popup__content--choice">
-            {items.map((item) => (
-              <div className="popup-item" onClick={(e) => addPopupHandler(item)}>
-                <img src={`${url}` + item.tab.image.data.attributes.url} alt="p1" />
+            {items?.map((item) => (
+              <div className="popup-item"
+              onClick={(e) => addPopupHandler(item)}
+              >
+                <img src={`${url}` + item.image.url} alt="p1" />
                 <span></span>
-                <h3>{item.tab.title}</h3>
+                <h3>{item.title}</h3>
               </div>
             ))}
           </div>
@@ -181,9 +177,9 @@ function App() {
         <TabList className="nav">
           {popup.map((pop) => (
             <Tab className="nav__item"  >
-              <img src={`${url}` + pop.item.tab.image.data.attributes.url} alt="p1" />
+              <img src={`${url}` + pop.item.image.url} alt="p1" />
               <span></span>
-              <h3>{pop.item.tab.title}</h3>
+              <h3>{pop.item.title}</h3>
               <div className="del" onClick={() => removePopupHandler(pop.uid)}>
                 <span className='del__f'></span>
                 <span className='del__s'></span>
@@ -199,7 +195,7 @@ function App() {
         <div className="pages">
             {popup.map((pop) => 
               <TabPanel>
-                <CustomTab tabs={pop.item.content.tabs} services={content.find((con) => con.uid === pop.uid)} uid={pop.uid} params={hwl.find((hw) => hw.uid === pop.uid)} />
+                <CustomTab tabs={pop.item.tab} services={content.find((con) => con.uid === pop.uid)} uid={pop.uid} params={hwl.find((hw) => hw.uid === pop.uid)} />
               </TabPanel>
             )}
         </div>

@@ -1,10 +1,14 @@
 import React from 'react'
 import { Form } from '../Form'
 import './request.scss'
-
+import { useSelector } from 'react-redux';
 
 function Request({total}) {
-  const [st, setSt] = React.useState()
+
+  const mussum = useSelector((state) => state.mussumData.mussum)
+
+  const [formActive, setFormActive] = React.useState(false)
+
 
 
   return (
@@ -20,11 +24,11 @@ function Request({total}) {
         Итогоговая стоимость: <>{!isNaN(total) ? total : '0'} kr</>
       </div>
 
-      <button onClick={() => setSt(!st)}>Оставить заявку</button>
+      <button onClick={() => setFormActive(true)} disabled={mussum.length !== 0 ? false : true}>Оставить заявку</button>
 
-      {st ? <p>хуй</p> : <p>пизда</p>}
+      {mussum.length === 0  ? <p>Вы еще ничего не выбрали</p> : ''}
 
-      <Form />
+      <Form formActive={formActive} setFormActive={setFormActive} />
     </div>
   )
 }
