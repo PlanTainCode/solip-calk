@@ -39,7 +39,7 @@ function App() {
 
 
   const popup = useSelector((state) => state.popupData.popup)
-  console.log(popup)
+  
   const content = useSelector((state) => state.contentData.content)
 
   const hwl = useSelector((state) => state.hwlData.hwl)
@@ -55,58 +55,10 @@ function App() {
   const dispatch = useDispatch()
 
 
-  // Общий счетчик 
-    const [posLenght, setPosLenght] = React.useState([])
+  
 
-    React.useEffect(() => {
+  console.log(mussum)
 
-      if (isEqual(pos, posLenght) === true) {
-        console.log('Внатуре');
-      } else {
-        console.log('Внатуре говно');
-        setPosLenght(pos);
-      }
-
-    })
-
-
-    const pars = (length, width, high, type) => {
-      if (type === 'S') {
-        return (Number(width) * Number(length))
-      }
-
-      if (type === '1sh') {
-        return (((Number(width) + Number(length)) / 4) * Number(high))
-      }
-      if (type === 'sht') {
-        return 1
-      }
-    }
-
-    const item = (coast, value, length, width, high, type) => {
-      if (coast === "Договорная") {
-        dispatch(setMussum(0))
-      } else {
-        dispatch(setMussum((Number(coast) * Number(value) * pars(length, width, high, type))))
-      }
-    }
-    
-    const mars = () => {
-      dispatch(removeMussum());
-      posLenght?.map((pps) => item(pps.coast, pps.value, pps.length, pps.width, pps.high, pps.type));
-
-      dispatch(resetTotal())
-
-      if (mussum.length !== 0) {
-        dispatch(setTotal(mussum.reduce((a, b) => a + b)))
-      }
-      
-    }
-
-    console.log(mussum)
-    console.log(pos)
-    console.log(posLenght)
-  // 
   const addPopupHandler = (item) => {
     const pop = {
       uid: v4(),
@@ -120,6 +72,8 @@ function App() {
           type: t.type,
           title: t.title,
           coast: t.coast,
+          dopP: t.dopP,
+          dopA: t.dopA,
           uid: v4()
         }
         return newItem
@@ -145,7 +99,7 @@ function App() {
   const url = 'https://solipadmin.tech'
 
   return (
-    <div className='page' onClick={() => mars()}>
+    <div className='page' >
       <div className={popupActive ? 'popup active' : 'popup'}>
         <div className={popupActive ? 'popup__area active' : 'popup__area'}></div>
         
@@ -195,7 +149,7 @@ function App() {
         <div className="pages">
             {popup.map((pop) => 
               <TabPanel>
-                <CustomTab tabs={pop.item.tab} services={content.find((con) => con.uid === pop.uid)} uid={pop.uid} params={hwl.find((hw) => hw.uid === pop.uid)} />
+                <CustomTab  tabs={pop.item.tab} services={content.find((con) => con.uid === pop.uid)} uid={pop.uid} params={hwl.find((hw) => hw.uid === pop.uid)} />
               </TabPanel>
             )}
         </div>

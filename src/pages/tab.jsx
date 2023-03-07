@@ -6,10 +6,13 @@ import {Tab, Tabs, TabList, TabPanel} from 'react-tabs'
 import { ItemPos } from '../components/ItemPos'
 import { setHwl, removeHwl } from '../features/hwl/hwlSlice'
 import { ItemPosT1 } from '../components/ItemPosT1'
+import { ItemPosT2 } from '../components/ItemPosT2'
 
-function CustomTab({ uid, params, tabs, services}) {
+function CustomTab({ uid, params, tabs, services, mars}) {
 
   const dispatch = useDispatch()
+
+  
 
   const [high, setHigh] = React.useState()
   const [width, setWidth] = React.useState()
@@ -66,11 +69,9 @@ function CustomTab({ uid, params, tabs, services}) {
                 {item.map((subitem) => 
                     subitem.type === "sht" 
                     ? 
-                      <ItemPosT1 params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} />
+                      <ItemPosT1 params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
                     :
-                      <ItemPos params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} />
-                    
-                    
+                      <ItemPos   params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
                   
                 )}
               </TabPanel>

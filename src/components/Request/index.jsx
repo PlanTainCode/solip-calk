@@ -9,7 +9,19 @@ function Request({total}) {
 
   const [formActive, setFormActive] = React.useState(false)
 
+  const [error, setError] = React.useState(false)
 
+  const checkError = () => {
+
+    if (mussum.length === 0) {
+      setError(true)
+      setFormActive(false)
+      return
+    } else {
+      setError(false)
+      setFormActive(true)
+    }
+  }
 
   return (
     <div className="request">
@@ -24,9 +36,9 @@ function Request({total}) {
         Итогоговая стоимость: <>{!isNaN(total) ? total : '0'} kr</>
       </div>
 
-      <button onClick={() => setFormActive(true)} disabled={mussum.length !== 0 ? false : true}>Оставить заявку</button>
+      <button onClick={() => checkError()} >Оставить заявку</button>
 
-      {mussum.length === 0  ? <p>Вы еще ничего не выбрали</p> : ''}
+      {error ? <p style={{color: "red"}}>Вы еще ничего не выбрали</p> : ''}
 
       <Form formActive={formActive} setFormActive={setFormActive} />
     </div>
