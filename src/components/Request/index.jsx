@@ -26,19 +26,19 @@ function Request({total}) {
   return (
     <div className="request">
       <div className="request__title">
-        <h1>Заявка</h1>
-        <p><span></span> У вас уже есть проект, и вы хотите узнать его стоимость? Загрузите имеющуюся информацию и мы поможем вам с предварительным расчетом.</p>
+        <h1>ANSÖKAN</h1>
+        <p><span></span> Har du redan ett projekt och vill veta vad det kostar? Ladda upp din befintliga information så hjälper vi dig med en uppskattning.</p>
       </div>
 
       <span></span>
 
       <div className="request__coast">
-        Итогоговая стоимость: <>{!isNaN(total) ? total : '0'} kr</>
+      Total kostnad: <>{!isNaN(total) ? total : '0'} kr</>
       </div>
 
-      <button onClick={() => checkError()} >Оставить заявку</button>
+      <button onClick={() => checkError()} >Lämna en förfrågan</button>
 
-      {error ? <p style={{color: "red"}}>Вы еще ничего не выбрали</p> : ''}
+      {error ? <p style={{color: "red"}}>Du har inte valt något ännu</p> : ''}
 
       <Form formActive={formActive} setFormActive={setFormActive} />
     </div>

@@ -39,11 +39,11 @@ function CustomTab({ uid, params, tabs, services, mars}) {
         <section className="room__header">
           <form className="form-info" onSubmit={(e) => e.preventDefault()}>
             <div className="form-info__ft">
-              <label>Высота потолков, м</label>
+              <label>Takhöjder, m</label>
               <input type="text" name='high' id='high' placeholder={params?.high} onChange={(e) => setHigh(e.target.value)} />
             </div>
             <div className="form-info__st">
-              <label>Стены, м2</label>
+              <label>Väggar, m2</label>
               <div className='form-info__st--div'>
                 <input type="text" name='length' id='length' placeholder={params?.length} onChange={(e) => setLength(e.target.value)}/>
                 <span>X</span>
@@ -61,8 +61,8 @@ function CustomTab({ uid, params, tabs, services, mars}) {
         <span className="room__separ"></span>
         <section className='room__body'>
           <div className="room__body--us">
-            <p>Услуга</p>
-            <p>Цена</p>
+            <p>Service</p>
+            <p>Pris</p>
           </div>
             {services.list.map((item) => 
               <TabPanel className="room__body--block">

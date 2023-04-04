@@ -36,12 +36,18 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
         if (type === 'S') {
           return (Number(width) * Number(length))
         }
-  
-        if (type === 'C') {
-          return (((Number(width) + Number(length)) / 4) * Number(high))
+
+        if (type === '1sh') {
+          return (((Number(width) + Number(length)) / 2) * Number(high))
         }
         if (type === 'sht') {
           return 1
+        }
+        if (type === 'P') {
+            return ((Number(width) + Number(length)) * 2)
+        }
+        if (type === 'Lsh') {
+            return ((Number(width) + Number(length)) / 2)
         }
       }
   
@@ -65,7 +71,7 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
         
       }
 
-    const viewCoast = (type) => {
+      const viewCoast = (type) => {
         if (type === '1sh') {
             return "kr/m2"
         }
@@ -75,7 +81,15 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
         }
 
         if (type === 'sht') {
-            return "шт"
+            return "kr/bit"
+        }
+
+        if (type === 'P') {
+            return "kr/m"
+        }
+
+        if (type === 'Lsh') {
+            return "kr/m"
         }
     }
 
@@ -129,7 +143,7 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
             {/* Наименование услуги (тут все четко) */}
             <p className="item-pos__b">{title}</p>
             {/* Цена услуги (тоже все четко) */}
-            <p><div className="item-pos__coast">Цена:</div>{coast} {coast === 'Договорная' ? undefined : viewCoast(type)}</p>
+            <p><div className="item-pos__coast">Цена:</div>{coast} {coast === 'Enligt överenskommelse' ? undefined : viewCoast(type)}</p>
             {/* Элемент выбора */}
             <div className="item-pos__choice">
                 {/* Кнопка + выбранный элемент */}

@@ -85,19 +85,19 @@ export const Form = ({formActive, setFormActive}) => {
                     <span></span>
                 </div>
                 <div className="form__body--content">
-                    <h2>Оставте свой номер и мы будем рады проконсультировать вас уже через 30 минут.</h2>
+                    <h2>Lämna ditt nummer och vi kommer att ge dig råd inom 30 minuter.</h2>
                     <div className='formt'>
                         <input type="text" value={`${total} kr`} readonly  />
-                        <input type="text" className={nameError ? 'red' : ''} placeholder='Имя' onChange={(e) => setName(e.target.value)}  />
-                        <input type="email" className={emailError ? 'red' : ''}  placeholder='Почта' onChange={(e) => setEmail(e.target.value)} />
-                        <textarea name="comment" id="comment" placeholder='Комментарий' onChange={(e) => setComment(e.target.value)}></textarea>
+                        <input type="text" className={nameError ? 'red' : ''} placeholder='Namn' onChange={(e) => setName(e.target.value)}  />
+                        <input type="email" className={emailError ? 'red' : ''}  placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} />
+                        <textarea name="comment" id="comment" placeholder='Kommentar' onChange={(e) => setComment(e.target.value)}></textarea>
                         <input type="tel" className={telError ? 'red' : ''}  placeholder='8-800-555-35-35' onChange={(e) => setTel(e.target.value)} />
                         <button onClick={() => buttonClick()} >Консультация</button>
                     </div>
-                    <p>Нажимая на кнопку, ты соглашаешься с Договором Публичной Оферты и обработкой своих персональных данных.</p>
+                    <p>Genom att klicka på knappen godkänner du avtalet om det offentliga erbjudandet och behandlingen av dina personuppgifter.</p>
                     <div className="cs">
-                        <a href="/">Договор Публичной Оферты</a>
-                        <a href="/">Политика конфиденциальности</a>
+                        <a href="/">Avtal om offentligt uppköpserbjudande</a>
+                        <a href="/">Integritetspolicy</a>
                     </div>
                 </div>
             </div>
