@@ -149,7 +149,7 @@ function App() {
         <div className="pages">
             {popup.map((pop) => 
               <TabPanel>
-                <CustomTab  tabs={pop.item.tab} services={content.find((con) => con.uid === pop.uid)} uid={pop.uid} params={hwl.find((hw) => hw.uid === pop.uid)} />
+                <CustomTab title={pop.item.title}  tabs={pop.item.tab} services={content.find((con) => con.uid === pop.uid)} uid={pop.uid} params={hwl.find((hw) => hw.uid === pop.uid)} />
               </TabPanel>
             )}
         </div>

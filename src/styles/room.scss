@@ -203,6 +203,36 @@
         }
     }
 
+    &__bt {
+        box-sizing: border-box;
+        padding: 11px 15px;
+        align-self: flex-end;
+        margin-left: 30px;
+        font-family: 'Gilroy';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 18px;
+        border-radius: 10px;
+        color: #FFFFFF;
+        background: #000000;
+        border: 0px solid transparent;
+        cursor: pointer;
+
+        &:disabled {
+            cursor: default;
+            background: #00000081;
+        }
+
+        @media (max-width: 540px) {
+            align-self: flex-start;
+            margin: 0px 0px;
+            font-size: 14px;
+            line-height: 14px;
+            padding: 8px 10px;
+        }
+    }
+
     @media (max-width: 1240px) {
         display: flex;
         align-items: center;

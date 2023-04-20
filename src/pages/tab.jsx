@@ -6,17 +6,19 @@ import {Tab, Tabs, TabList, TabPanel} from 'react-tabs'
 import { ItemPos } from '../components/ItemPos'
 import { setHwl, removeHwl } from '../features/hwl/hwlSlice'
 import { ItemPosT1 } from '../components/ItemPosT1'
-import { ItemPosT2 } from '../components/ItemPosT2'
+import {isEmpty} from 'lodash'
 
-function CustomTab({ uid, params, tabs, services, mars}) {
+function CustomTab({ uid, params, tabs, services, mars, title}) {
 
   const dispatch = useDispatch()
-
+  console.log(params?.high)
+  console.log(params?.width)
+  console.log(params?.length)
   
 
-  const [high, setHigh] = React.useState()
-  const [width, setWidth] = React.useState()
-  const [length, setLength] = React.useState()
+  const [high, setHigh] = React.useState(null)
+  const [width, setWidth] = React.useState(null)
+  const [length, setLength] = React.useState(null)
 
   const addHwl = () => {
     const hwl = {
@@ -32,6 +34,19 @@ function CustomTab({ uid, params, tabs, services, mars}) {
 
   const pos = useSelector((state) => state.posData.pos)
 
+
+  const checkValue = () => {
+
+    if (high === null || undefined || Number(0)) {
+      return true
+    } else if (width=== null || undefined || Number(0)) {
+      return true
+    } else if (length === null || undefined || Number(0)) {
+      return true
+    } else {
+      return false
+    }
+  }
  
   return (
     <div className='room'>
@@ -40,16 +55,19 @@ function CustomTab({ uid, params, tabs, services, mars}) {
           <form className="form-info" onSubmit={(e) => e.preventDefault()}>
             <div className="form-info__ft">
               <label>Takhöjder, m</label>
-              <input type="text" name='high' id='high' placeholder={params?.high} onChange={(e) => setHigh(e.target.value)} />
+              <input type="text" name='high' id='high' placeholder={params?.high} onChange={(e) => e.target.value !== 0 ? setHigh(e.target.value) : setHigh(null)} />
             </div>
             <div className="form-info__st">
               <label>Väggar, m2</label>
               <div className='form-info__st--div'>
-                <input type="text" name='length' id='length' placeholder={params?.length} onChange={(e) => setLength(e.target.value)}/>
+                <input type="text" name='length' id='length' placeholder={params?.length} onChange={(e) => e.target.value !== 0 ? setLength(e.target.value) : setLength(null)}/>
                 <span>X</span>
-                <input type="text" name='width' id='width' placeholder={params?.width} onChange={(e) => setWidth(e.target.value)} onBlur={() => addHwl()} />
+                <input type="text" name='width' id='width' placeholder={params?.width} onChange={(e) => e.target.value !== 0 ? setWidth(e.target.value) : setWidth(null)} />
               </div>
             </div>
+            <button className='form-info__bt' 
+            disabled={checkValue()} 
+            onClick={() => addHwl()}>{isEmpty(params) === true ? "Добавить" : "Обновить"}</button>
           </form>
           <TabList className="tabs">
             {tabs.map((tab) => 
@@ -64,18 +82,23 @@ function CustomTab({ uid, params, tabs, services, mars}) {
             <p>Service</p>
             <p>Pris</p>
           </div>
-            {services.list.map((item) => 
-              <TabPanel className="room__body--block">
-                {item.map((subitem) => 
-                    subitem.type === "sht" 
-                    ? 
-                      <ItemPosT1 params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
-                    :
-                      <ItemPos   params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
-                  
-                )}
-              </TabPanel>
-            )}
+            {isEmpty(params) === true ?
+              <p className='pred'>Du har ännu inte angett parametrarna {title}</p>
+            :
+              services.list.map((item) => 
+                  <TabPanel className="room__body--block">
+                    {item.map((subitem) => 
+                        subitem.type === "sht" 
+                        ? 
+                          <ItemPosT1 params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
+                        :
+                          <ItemPos   params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
+                      
+                    )}
+                  </TabPanel>
+              )
+            }
+            
         </section>
       </Tabs>
     </div>

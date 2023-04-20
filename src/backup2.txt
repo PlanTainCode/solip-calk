@@ -10,35 +10,25 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
 
     const dispatch = useDispatch()
     
+    const [count, setCount] = React.useState(0)
 
-    const pos = useSelector((state) => state.posData.pos);
-    const currentPos = pos.find((p) => p.uid === uid);
-    const [count, setCount] = React.useState(currentPos ? currentPos.value : 0);
-
-
-
-    const [matrs, setMatrs] = React.useState()
 
     const [posLenght, setPosLenght] = React.useState([])
 
     React.useEffect(() => {
 
       if (isEqual(pos, posLenght) === true) {
-        // console.log('');
+        console.log('');
       } else {
-        // console.log('');
+        console.log('');
         setPosLenght(pos);
       }
 
     })
 
-    React.useEffect(() => {
-      if (currentPos) {
-        mars()
-      }
-    }, [])
-
-
+  
+    const pos = useSelector((state) => state.posData.pos)
+  
     const mussum = useSelector((state) => state.mussumData.mussum)
 
     // Функции подсчета
@@ -77,12 +67,9 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
   
         if (mussum.length !== 0) {
           dispatch(setTotal(mussum.reduce((a, b) => a + b)))
-          setMatrs(mussum.reduce((a, b) => a + b))
         }
         
       }
-
-
 
       const viewCoast = (type) => {
         if (type === '1sh') {
@@ -104,7 +91,7 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
         if (type === 'Lsh') {
             return "kr/m"
         }
-      }
+    }
 
 
 
@@ -112,7 +99,7 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
 
         if (val === 1) {
             if (count > 0) {
-                setCount((prev) => prev - 1)
+                setCount(count - 1)
             } else {
                 setCount(0)
             }
@@ -120,11 +107,9 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
         } 
         
         if (val === 0) {
-            setCount((prev) => prev + 1)
+            setCount(count + 1)
         }
-        
     }
-
 
     const addPos = () => {
         const pos = {
@@ -140,23 +125,17 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
             length: params?.length,
         }
     
-        // console.log(pos)
+        console.log(pos)
 
         dispatch(removePos(uid))
         dispatch(setPos(pos))
-        setMatrs(pos)
+        
         if (count === 0) {
             dispatch(removePos(uid))
         }
     }
 
-    React.useEffect(() => {
-      addPos();
-    }, [count]);
-
-    React.useEffect(() => {
-      mars();
-    }, [matrs]);
+    
 
 
     return (
@@ -168,17 +147,16 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
             {/* Элемент выбора */}
             <div className="item-pos__choice">
                 {/* Кнопка + выбранный элемент */}
-                <div 
-                  className="item-pos__choice--sht" 
-                  // onMouseOut={() => mars()}
-                >
+                <div className="item-pos__choice--sht" onMouseOut={() => mars()}>
                     <button 
                         onClick={() => Con(1)} 
                         className={count === 0 ? "disabled" : ""}
+                        onMouseOut={() => addPos()}
                     >-</button>
                     <p>{count}</p>
                     <button 
                         onClick={() => Con(0)} 
+                        onMouseOut={() => addPos()}
                     >+</button>
                 </div>
                 
