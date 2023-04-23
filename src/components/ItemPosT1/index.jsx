@@ -9,7 +9,7 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
     
 
     const dispatch = useDispatch()
-    
+    const [scroll, setScroll] = React.useState(0);
 
     const pos = useSelector((state) => state.posData.pos);
     const currentPos = pos.find((p) => p.uid === uid);
@@ -20,6 +20,21 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
     const [matrs, setMatrs] = React.useState()
 
     const [posLenght, setPosLenght] = React.useState([])
+
+    // обновлять при скролле
+    const handleScroll = () => {
+      setScroll(window.scrollY);
+  
+    };
+
+    React.useEffect(() => {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    React.useEffect(() => {
+      mars()
+    }, [scroll])
 
     React.useEffect(() => {
 
@@ -62,8 +77,8 @@ export const ItemPosT1 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
       }
   
       const item = (coast, value, length, width, high, type, dopP, dopA) => {
-        if (coast === "Договорная") {
-          dispatch(setMussum(0))
+        if (coast === "Enligt överenskommelse") {
+          dispatch(setMussum(1))
         } else {
           dispatch(setMussum((Number(coast) * Number(value) * pars(length, width, high, type)) + ((Number(dopP) * ((Number(length) + Number(width)) * 2)) * Number(dopA)) ))
         }

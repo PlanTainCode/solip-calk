@@ -7,13 +7,14 @@ import { ItemPos } from '../components/ItemPos'
 import { setHwl, removeHwl } from '../features/hwl/hwlSlice'
 import { ItemPosT1 } from '../components/ItemPosT1'
 import {isEmpty} from 'lodash'
+import { ItemPosT2 } from '../components/ItemPosT2'
 
 function CustomTab({ uid, params, tabs, services, mars, title}) {
 
   const dispatch = useDispatch()
-  console.log(params?.high)
-  console.log(params?.width)
-  console.log(params?.length)
+  // console.log(params?.high)
+  // console.log(params?.width)
+  // console.log(params?.length)
   
 
   const [high, setHigh] = React.useState(null)
@@ -45,6 +46,24 @@ function CustomTab({ uid, params, tabs, services, mars, title}) {
       return true
     } else {
       return false
+    }
+  }
+
+  const handleType = (subitem) => {
+    if (subitem.type === "sht") {
+      return <ItemPosT1 params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
+    } 
+    if (subitem.type === "1sh") {
+      return <ItemPos params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
+    } 
+    if (subitem.type === "Lsh") {
+      return <ItemPos params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
+    } 
+    if (subitem.type === "S") {
+      return <ItemPosT2   params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
+    }
+    if (subitem.type === "P") {
+      return <ItemPosT2   params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
     }
   }
  
@@ -88,12 +107,12 @@ function CustomTab({ uid, params, tabs, services, mars, title}) {
               services.list.map((item) => 
                   <TabPanel className="room__body--block">
                     {item.map((subitem) => 
-                        subitem.type === "sht" 
-                        ? 
-                          <ItemPosT1 params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
-                        :
-                          <ItemPos   params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
-                      
+                        // subitem.type === "sht" 
+                        // ? 
+                        //   <ItemPosT1 params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
+                        // :
+                        //   <ItemPos   params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
+                      handleType(subitem)
                     )}
                   </TabPanel>
               )

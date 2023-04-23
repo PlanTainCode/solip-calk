@@ -29,7 +29,8 @@ function App() {
     const tabUid = items?.map((it) => it.uid)
 
     if (tabUid?.find((t) => t)) {
-      console.log('')
+      // console.log('')
+      return
     } else {
       dispatch(getEl())
     }
@@ -57,7 +58,7 @@ function App() {
 
   
 
-  console.log(mussum)
+  // console.log(mussum)
 
   const addPopupHandler = (item) => {
     const pop = {

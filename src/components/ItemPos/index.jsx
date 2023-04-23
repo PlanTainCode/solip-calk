@@ -7,19 +7,34 @@ import { isEqual } from 'underscore'
 
 export const ItemPos = ({params, rodUid, poss, uid, title, coast, type, dopP, dopA}) => {
     const [modalActive, setModalActive] = React.useState(false)
-    
+    const [scroll, setScroll] = React.useState(0);
     const [activeItem, setActiveItem] = React.useState(null)
 
     const dispatch = useDispatch()
 
     const [posLenght, setPosLenght] = React.useState([])
 
+
+    // обновлять при скролле
+    const handleScroll = () => {
+        setScroll(window.scrollY);
+    
+    };
+
+    React.useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    React.useEffect(() => {
+        mars()
+    }, [scroll])
+
     React.useEffect(() => {
 
         if (isEqual(pos, posLenght) === true) {
-            console.log('');
+            return
         } else {
-            console.log('');
             setPosLenght(pos);
         }
 
@@ -51,8 +66,8 @@ export const ItemPos = ({params, rodUid, poss, uid, title, coast, type, dopP, do
       }
   
       const item = (coast, value, length, width, high, type, dopP, dopA) => {
-        if (coast === "Договорная") {
-          dispatch(setMussum(0))
+        if (coast === "Enligt överenskommelse") {
+          dispatch(setMussum(1))
         } else {
           dispatch(setMussum((Number(coast) * Number(value) * pars(length, width, high, type)) + ((Number(dopP) * ((Number(length) + Number(width)) * 2)) * Number(dopA)) ))
         }
