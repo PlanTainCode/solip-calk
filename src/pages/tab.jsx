@@ -12,9 +12,6 @@ import { ItemPosT2 } from '../components/ItemPosT2'
 function CustomTab({ uid, params, tabs, services, mars, title}) {
 
   const dispatch = useDispatch()
-  // console.log(params?.high)
-  // console.log(params?.width)
-  // console.log(params?.length)
   
 
   const [high, setHigh] = React.useState(null)
@@ -86,7 +83,7 @@ function CustomTab({ uid, params, tabs, services, mars, title}) {
             </div>
             <button className='form-info__bt' 
             disabled={checkValue()} 
-            onClick={() => addHwl()}>{isEmpty(params) === true ? "Добавить" : "Обновить"}</button>
+            onClick={() => addHwl()}>{isEmpty(params) === true ? "Lägg till" : "Uppdatera"}</button>
           </form>
           <TabList className="tabs">
             {tabs.map((tab) => 
@@ -106,14 +103,7 @@ function CustomTab({ uid, params, tabs, services, mars, title}) {
             :
               services.list.map((item) => 
                   <TabPanel className="room__body--block">
-                    {item.map((subitem) => 
-                        // subitem.type === "sht" 
-                        // ? 
-                        //   <ItemPosT1 params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
-                        // :
-                        //   <ItemPos   params={params} poss={pos} uid={subitem.uid} rodUid={uid} title={subitem.title} coast={subitem.coast} type={subitem.type} dopP={subitem.dopP} dopA={subitem.dopA} />
-                      handleType(subitem)
-                    )}
+                    {item.map((subitem) => handleType(subitem))}
                   </TabPanel>
               )
             }

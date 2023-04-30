@@ -98,23 +98,23 @@ export const ItemPos = ({params, rodUid, poss, uid, title, coast, type, dopP, do
     const items = [
         {
             value: 1,
-            title: "1 стена"
+            title: "1 vägg"
         },
         {
             value: 2,
-            title: "2 стены"
+            title: "2 väggar"
         },
         {
             value: 3,
-            title: "3 стены"
+            title: "3 väggar"
         },
         {
             value: 4,
-            title: "4 стены"
+            title: "4 väggar"
         },
         {
             value: null,
-            title: "Отмена"
+            title: "Avbokning"
         },
     ]
 
@@ -172,7 +172,7 @@ export const ItemPos = ({params, rodUid, poss, uid, title, coast, type, dopP, do
             {/* Наименование услуги (тут все четко) */}
             <p className="item-pos__b">{title}</p>
             {/* Цена услуги (тоже все четко) */}
-            <p><div className="item-pos__coast">Цена:</div>{coast} {coast === 'Enligt överenskommelse' ? undefined : viewCoast(type)}</p>
+            <p><div className="item-pos__coast">Pris:</div>{coast} {coast === 'Enligt överenskommelse' ? undefined : viewCoast(type)}</p>
             {/* Элемент выбора */}
             <div className="item-pos__choice" onMouseOut={() => mars()}>
                 {/* Кнопка + выбранный элемент */}
@@ -180,7 +180,7 @@ export const ItemPos = ({params, rodUid, poss, uid, title, coast, type, dopP, do
                     className={activeItem !== null ? "item-pos__choice--title active" : "item-pos__choice--title"} 
                     onClick={() => setModalActive(!modalActive)}
                 >
-                    {activeItem === null ? 'Добавить' : activeName.title}
+                    {activeItem === null ? 'Lägg till' : activeName.title}
                     {/* Добавить */}
                 </span>
                 {/* Список элементов выбора */}
@@ -196,7 +196,7 @@ export const ItemPos = ({params, rodUid, poss, uid, title, coast, type, dopP, do
                         >{item.title}</li>
                     ))}
                 </ul>
-                {/* Конец залупы */}
+                {/* Конец  */}
             </div>
         </div>
     )

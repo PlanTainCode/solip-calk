@@ -170,7 +170,7 @@ export const ItemPosT2 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
             {/* Наименование услуги (тут все четко) */}
             <p className="item-pos__b">{title}</p>
             {/* Цена услуги (тоже все четко) */}
-            <p><div className="item-pos__coast">Цена:</div>{coast} {coast === 'Договорная' ? undefined : viewCoast(type)}</p>
+            <p><div className="item-pos__coast">Pris:</div>{coast} {coast === 'Enligt överenskommelse' ? undefined : viewCoast(type)}</p>
             {/* Элемент выбора */}
             <div className="item-pos__choice">
                 {/* Кнопка + выбранный элемент */}
@@ -179,7 +179,7 @@ export const ItemPosT2 = ({params, rodUid, poss, uid, title, coast, type, dopP, 
                     onClick={() => {setCkicked(!clicked); mars()}}
 
                 >
-                    {clicked ? 'Убрать' : 'Добавить'}
+                    {clicked ? 'Ta bort' : 'Lägg till'}
                     {/* Добавить */}
                 </span>
                 {/* Список элементов выбора */}
