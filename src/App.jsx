@@ -111,7 +111,7 @@ function App() {
               <line opacity="0.36" x1="17.8389" y1="1.29496" x2="0.839045" y2="18.2948" stroke="black"/>
             </svg>
           </div>
-          <h1>выберите тип комнаты</h1>
+          <h1>välj en rumstyp</h1>
           <div className="popup__content--choice">
             {items?.map((item) => (
               <div className="popup-item"

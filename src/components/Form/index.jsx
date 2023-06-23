@@ -91,7 +91,7 @@ export const Form = ({formActive, setFormActive}) => {
                         <input type="text" className={nameError ? 'red' : ''} placeholder='Namn' onChange={(e) => setName(e.target.value)}  />
                         <input type="email" className={emailError ? 'red' : ''}  placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} />
                         <textarea name="comment" id="comment" placeholder='Kommentar' onChange={(e) => setComment(e.target.value)}></textarea>
-                        <input type="tel" className={telError ? 'red' : ''}  placeholder='8-800-555-35-35' onChange={(e) => setTel(e.target.value)} />
+                        <input type="tel" className={telError ? 'red' : ''}  placeholder='Telefon' onChange={(e) => setTel(e.target.value)} />
                         <button onClick={() => buttonClick()} >Консультация</button>
                     </div>
                     <p>Genom att klicka på knappen godkänner du avtalet om det offentliga erbjudandet och behandlingen av dina personuppgifter.</p>

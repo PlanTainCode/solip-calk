@@ -69,7 +69,7 @@ function CustomTab({ uid, params, tabs, services, mars, title}) {
       <Tabs selectedTabClassName='tabs__li active'>
         <section className="room__header">
           <form className="form-info" onSubmit={(e) => e.preventDefault()}>
-            <div className="form-info__ft">
+            {/* <div className="form-info__ft">
               <label>Takhöjder, m</label>
               <input type="text" name='high' id='high' placeholder={params?.high} onChange={(e) => e.target.value !== 0 ? setHigh(e.target.value) : setHigh(null)} />
             </div>
@@ -79,6 +79,48 @@ function CustomTab({ uid, params, tabs, services, mars, title}) {
                 <input type="text" name='length' id='length' placeholder={params?.length} onChange={(e) => e.target.value !== 0 ? setLength(e.target.value) : setLength(null)}/>
                 <span>X</span>
                 <input type="text" name='width' id='width' placeholder={params?.width} onChange={(e) => e.target.value !== 0 ? setWidth(e.target.value) : setWidth(null)} />
+              </div>
+            </div> */}
+            <div className="form-info__ft">
+              <label>Takhöjder, m</label>
+              <input 
+                type="text" 
+                name='high' 
+                id='high' 
+                placeholder={params?.high} 
+                onKeyPress={(e) => {
+                    if (!/[0-9.]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                }}
+                onChange={(e) => e.target.value !== 0 ? setHigh(e.target.value) : setHigh(null)} />
+            </div>
+            <div className="form-info__st">
+              <label>Väggar, m2</label>
+              <div className='form-info__st--div'>
+                <input 
+                  type="text" 
+                  name='length' 
+                  id='length' 
+                  placeholder={params?.length} 
+                  onKeyPress={(e) => {
+                      if (!/[0-9.]/.test(e.key)) {
+                        e.preventDefault();
+                      }
+                  }}
+                  onChange={(e) => e.target.value !== 0 ? setLength(e.target.value) : setLength(null)} />
+                <span>X</span>
+                <input 
+                  type="text" 
+                  name='width' 
+                  id='width' 
+                  placeholder={params?.width} 
+                  onKeyPress={(e) => {
+                      if (!/[0-9.]/.test(e.key)) {
+                        e.preventDefault();
+                      }
+                  }}
+                  onChange={(e) => e.target.value !== 0 ? setWidth(e.target.value) : setWidth(null)} />
               </div>
             </div>
             <button className='form-info__bt' 
