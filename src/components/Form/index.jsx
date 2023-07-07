@@ -30,7 +30,7 @@ export const Form = ({formActive, setFormActive}) => {
             email: email,
             tel: tel,
             sum: total,
-            comment: comment !== '' ? comment : 'Комментарий не оставили',
+            comment: comment !== '' ? comment : 'Ingen kommentar har lämnats',
         }
 
         if (name.length === 0) {
@@ -92,7 +92,7 @@ export const Form = ({formActive, setFormActive}) => {
                         <input type="email" className={emailError ? 'red' : ''}  placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} />
                         <textarea name="comment" id="comment" placeholder='Kommentar' onChange={(e) => setComment(e.target.value)}></textarea>
                         <input type="tel" className={telError ? 'red' : ''}  placeholder='Telefon' onChange={(e) => setTel(e.target.value)} />
-                        <button onClick={() => buttonClick()} >Консультация</button>
+                        <button onClick={() => buttonClick()} >Rådgivning</button>
                     </div>
                     <p>Genom att klicka på knappen godkänner du avtalet om det offentliga erbjudandet och behandlingen av dina personuppgifter.</p>
                     <div className="cs">
